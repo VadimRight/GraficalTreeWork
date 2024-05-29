@@ -1,15 +1,15 @@
 package usecase
 
 import (
-	"github.com/VadimRight/GraficalTreeWork/entities"
+	"github.com/VadimRight/GraficalTreeWork/enteties"
 )
 
 type BuildTreeUseCase struct {
-	Tree *entities.BSTFuzzy
+	Tree *enteties.BSTFuzzy
 }
 
 func NewBuildTreeUseCase() *BuildTreeUseCase {
-	return &BuildTreeUseCase{Tree: &entities.BSTFuzzy{}}
+	return &BuildTreeUseCase{Tree: &enteties.BSTFuzzy{}}
 }
 
 func (uc *BuildTreeUseCase) InsertNode(value int, membership float64) {
