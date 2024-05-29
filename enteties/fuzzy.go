@@ -1,4 +1,4 @@
-package modules
+package entities
 
 import (
 	"errors"
