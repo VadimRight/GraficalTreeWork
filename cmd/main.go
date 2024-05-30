@@ -9,13 +9,13 @@ import (
 )
 
 func main() {
-	filePath := "./fuzzy.txt"
-	tree, err := parsers.ParseTxtFile(filePath)
+	filePath := "./txt-files/fuzzy.txt"
+	treeFuzzy, err := parsers.ParseTxtFileFuzzy(filePath)
 	if err != nil {
 		fmt.Println("Error parsing file:", err)
 		return
 	}
 
 	fmt.Println("InOrder Traversal:")
-	tree.InOrder(tree.Root)
+	treeFuzzy.InOrder(treeFuzzy.Root)
 }
