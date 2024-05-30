@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/VadimRight/Grafical-Tree-Work/entities"
+	"github.com/VadimRight/GraficalTreeWork/entities"
 )
 
 func ParseAndInsertFuzzyNumbers(filePath string, tree *entities.BSTFuzzy) error {

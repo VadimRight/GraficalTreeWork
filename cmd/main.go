@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/VadimRight/Grafical-Tree-Work/entities"
-	"github.com/VadimRight/Grafical-Tree-Work/internal/parsers"
+	"github.com/VadimRight/GraficalTreeWork/entities"
+	"github.com/VadimRight/GraficalTreeWork/internal/parsers"
 )
 
 func main() {
