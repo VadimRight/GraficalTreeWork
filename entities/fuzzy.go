@@ -57,17 +57,6 @@ func Defuzzify(y, mu []float64) int {
 	return int(result)
 }
 
-// GenerateManualTriangleMembershipTree manually generates a tree representing a triangular membership function.
-func (bst *BSTFuzzy) GenerateManualTriangleMembershipTree() {
-	bst.InsertFuzzy(50)
-	bst.InsertFuzzy(40)
-	bst.InsertFuzzy(30)
-	bst.InsertFuzzy(60)
-	bst.InsertFuzzy(70)
-	bst.InsertFuzzy(20)
-	bst.InsertFuzzy(80)
-}
-
 // PrettyPrint prints the tree in a visually appealing way
 func (bst *BSTFuzzy) PrettyPrint() {
 	bst.printHelper(bst.Root, "", true)
