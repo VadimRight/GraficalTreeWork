@@ -7,37 +7,32 @@ import (
 )
 
 type NodeFuzzy struct {
-	Value      int
-	Membership float64
-	Left       *NodeFuzzy
-	Right      *NodeFuzzy
+	Value int
+	Left  *NodeFuzzy
+	Right *NodeFuzzy
 }
 
 type BSTFuzzy struct {
 	Root *NodeFuzzy
 }
 
-func (bst *BSTFuzzy) InsertFuzzy(value int, membership float64) {
+func (bst *BSTFuzzy) InsertFuzzy(value int) {
 	const opt string = "entities.InsertFuzzy"
-	if membership > 1.0 || membership < 0.0 {
-		err := errors.New("membership must be in the range [0.0, 1.0]")
-		log.Fatalf("%s: %v", opt, err)
-	}
 	if bst.Root == nil {
-		bst.Root = &NodeFuzzy{value, membership, nil, nil}
+		bst.Root = &NodeFuzzy{value, nil, nil}
 	} else {
-		bst.Root = bst.insertNodeFuzzy(bst.Root, value, membership)
+		bst.Root = bst.insertNodeFuzzy(bst.Root, value)
 	}
 }
 
-func (bst *BSTFuzzy) insertNodeFuzzy(node *NodeFuzzy, value int, membership float64) *NodeFuzzy {
+func (bst *BSTFuzzy) insertNodeFuzzy(node *NodeFuzzy, value int) *NodeFuzzy {
 	if node == nil {
-		return &NodeFuzzy{value, membership, nil, nil}
+		return &NodeFuzzy{value, nil, nil}
 	}
 	if value < node.Value {
-		node.Left = bst.insertNodeFuzzy(node.Left, value, membership)
+		node.Left = bst.insertNodeFuzzy(node.Left, value)
 	} else if value > node.Value {
-		node.Right = bst.insertNodeFuzzy(node.Right, value, membership)
+		node.Right = bst.insertNodeFuzzy(node.Right, value)
 	} else {
 		err := errors.New("duplicate values are not allowed in the tree")
 		log.Fatalf("entities.insertNodeFuzzy: %v", err)
@@ -64,13 +59,13 @@ func Defuzzify(y, mu []float64) int {
 
 // GenerateManualTriangleMembershipTree manually generates a tree representing a triangular membership function.
 func (bst *BSTFuzzy) GenerateManualTriangleMembershipTree() {
-	bst.InsertFuzzy(50, 1.0)
-	bst.InsertFuzzy(40, 0.5)
-	bst.InsertFuzzy(30, 0.4)
-	bst.InsertFuzzy(60, 0.5)
-	bst.InsertFuzzy(70, 0.4)
-	bst.InsertFuzzy(20, 0.3)
-	bst.InsertFuzzy(80, 0.3)
+	bst.InsertFuzzy(50)
+	bst.InsertFuzzy(40)
+	bst.InsertFuzzy(30)
+	bst.InsertFuzzy(60)
+	bst.InsertFuzzy(70)
+	bst.InsertFuzzy(20)
+	bst.InsertFuzzy(80)
 }
 
 // PrettyPrint prints the tree in a visually appealing way
@@ -90,7 +85,7 @@ func (bst *BSTFuzzy) printHelper(node *NodeFuzzy, prefix string, isTail bool) {
 		fmt.Printf("├── ")
 		prefix += "│   "
 	}
-	fmt.Printf("%d,%.1f\n", node.Value, node.Membership)
+	fmt.Printf("%d\n", node.Value)
 	bst.printHelper(node.Left, prefix, node.Right == nil)
 	bst.printHelper(node.Right, prefix, true)
 }

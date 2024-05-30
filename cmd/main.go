@@ -31,7 +31,7 @@ func main() {
 	// Добавление нового узла
 	if newFuzzyTree.Root != nil {
 		fmt.Println("\nЧтение и добавление нового узла:")
-		tree.InsertFuzzy(newFuzzyTree.Root.Value, newFuzzyTree.Root.Membership)
+		tree.InsertFuzzy(newFuzzyTree.Root.Value)
 	}
 
 	fmt.Println("\nДерево после добавления нового узла:")

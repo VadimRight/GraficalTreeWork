@@ -41,7 +41,7 @@ func ParseTxtFileFuzzy(filePath string) (*entities.BSTFuzzy, error) {
 			mu = append(mu, membership)
 		}
 		crispValue := entities.Defuzzify(y, mu)
-		tree.InsertFuzzy(crispValue, mu[0]) // Here we use the first mu value for the membership of the node
+		tree.InsertFuzzy(crispValue)
 	}
 
 	if err := scanner.Err(); err != nil {
