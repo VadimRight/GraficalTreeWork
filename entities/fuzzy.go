@@ -1,9 +1,7 @@
 package entities
 
 import (
-	"errors"
 	"fmt"
-	"log"
 )
 
 type NodeFuzzy struct {
@@ -26,16 +24,18 @@ func (bst *BSTFuzzy) InsertFuzzy(value int) {
 }
 
 func (bst *BSTFuzzy) insertNodeFuzzy(node *NodeFuzzy, value int) *NodeFuzzy {
+	if bst.Root == nil {
+		bst.Root = &NodeFuzzy{value, nil, nil}
+		return bst.Root
+	}
 	if node == nil {
 		return &NodeFuzzy{value, nil, nil}
 	}
-	if value < node.Value {
+	if value <= node.Value {
 		node.Left = bst.insertNodeFuzzy(node.Left, value)
-	} else if value > node.Value {
+	}
+	if value > node.Value {
 		node.Right = bst.insertNodeFuzzy(node.Right, value)
-	} else {
-		err := errors.New("duplicate values are not allowed in the tree")
-		log.Fatalf("entities.insertNodeFuzzy: %v", err)
 	}
 	return node
 }
