@@ -2,6 +2,7 @@ package parsers
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -21,19 +22,26 @@ func ParseTxtFileFuzzy(filePath string) (*entities.BSTFuzzy, error) {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		pairs := strings.Split(line, ";")
-		for _, pair := range pairs {
-			parts := strings.Split(pair, ",")
-			if len(parts) != 2 {
-				continue
-			}
-			value, err1 := strconv.Atoi(parts[0])
-			membership, err2 := strconv.ParseFloat(parts[1], 64)
-			if err1 != nil || err2 != nil {
-				continue
-			}
-			tree.InsertFuzzy(tree.Root, value, membership)
+		parts := strings.Fields(line)
+		if len(parts)%2 != 0 {
+			return nil, fmt.Errorf("invalid line format: %s", line)
 		}
+
+		var y, mu []float64
+		for i := 0; i < len(parts); i += 2 {
+			value, err := strconv.ParseFloat(parts[i], 64)
+			if err != nil {
+				return nil, err
+			}
+			membership, err := strconv.ParseFloat(parts[i+1], 64)
+			if err != nil {
+				return nil, err
+			}
+			y = append(y, value)
+			mu = append(mu, membership)
+		}
+		crispValue := entities.Defuzzify(y, mu)
+		tree.InsertFuzzy(crispValue, mu[0]) // Here we use the first mu value for the membership of the node
 	}
 
 	if err := scanner.Err(); err != nil {
