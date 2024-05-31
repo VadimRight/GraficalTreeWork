@@ -13,7 +13,7 @@ func main() {
 	tree := &entities.BSTFuzzy{}
 
 	// Чтение и добавление нечетких чисел из файла input.txt
-	err := parsers.ParseAndInsertFuzzyNumbers("input.txt", tree)
+	err := parsers.ParseAndInsertFuzzyNumbers("input.txt", tree, true)
 	if err != nil {
 		log.Fatalf("Error reading fuzzy numbers: %v", err)
 	}
@@ -22,7 +22,7 @@ func main() {
 	tree.PrettyPrint()
 
 	// Чтение и добавление нечеткого числа для нового узла из файла new_node.txt
-	err = parsers.ParseAndInsertFuzzyNumbers("new_node.txt", tree)
+	err = parsers.ParseAndInsertFuzzyNumbers("new_node.txt", tree, false)
 	if err != nil {
 		log.Fatalf("Error reading new node fuzzy number: %v", err)
 	}

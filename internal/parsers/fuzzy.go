@@ -10,7 +10,7 @@ import (
 	"github.com/VadimRight/GraficalTreeWork/entities"
 )
 
-func ParseAndInsertFuzzyNumbers(filePath string, tree *entities.BSTFuzzy) error {
+func ParseAndInsertFuzzyNumbers(filePath string, tree *entities.BSTFuzzy, isInputFile bool) error {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return err
@@ -20,13 +20,14 @@ func ParseAndInsertFuzzyNumbers(filePath string, tree *entities.BSTFuzzy) error 
 	scanner := bufio.NewScanner(file)
 	lineCount := 0
 
+	// Подсчет количества строк в файле
 	for scanner.Scan() {
 		lineCount++
 	}
 
-	// Проверка на минимальное количество строк
-	if lineCount < 7 {
-		return fmt.Errorf("need at least 7")
+	// Проверка на минимальное количество строк для основного входного файла
+	if isInputFile && lineCount < 7 {
+		return fmt.Errorf("need more than 7")
 	}
 
 	// Сброс сканера для повторного чтения
