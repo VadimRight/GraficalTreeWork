@@ -18,6 +18,20 @@ func ParseAndInsertFuzzyNumbers(filePath string, tree *entities.BSTFuzzy) error 
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
+	lineCount := 0
+
+	for scanner.Scan() {
+		lineCount++
+	}
+
+	// Проверка на минимальное количество строк
+	if lineCount < 7 {
+		return fmt.Errorf("need at least 7")
+	}
+
+	// Сброс сканера для повторного чтения
+	file.Seek(0, 0)
+	scanner = bufio.NewScanner(file)
 
 	for scanner.Scan() {
 		line := scanner.Text()
